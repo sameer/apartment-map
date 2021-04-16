@@ -1,10 +1,10 @@
 # apartment-map
 
-Export apartments from apartments.com to import them into Google My Maps.
+Import apartments from apartments.com to Google My Maps.
 
 ## Why?
 
-So you can consider multiple factors beyond commute and  work is. Maybe you want to consider crime, air pollution, or even noise levels.
+So you can consider multiple factors beyond your commute. Maybe you want to look at crime, bus routes, or even noise levels.
 
 ## Demo
 
