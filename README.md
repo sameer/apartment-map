@@ -1,4 +1,4 @@
-# apartments-map
+# apartment-map
 
 Export apartments from apartments.com to import them into Google My Maps.
 
