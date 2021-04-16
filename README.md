@@ -10,7 +10,7 @@ So you can consider multiple factors beyond commute and  work is. Maybe you want
 
 I pulled apartments in Culver city along with the Metro stations:
 
-[Screenshot of Google My Maps](screenshot.png)
+![Screenshot of Google My Maps](screenshot.png)
 
 ## Instructions
 
