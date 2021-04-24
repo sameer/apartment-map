@@ -1,7 +1,7 @@
 // apartments.com listings
 (async () => {
     console.log('Please wait while I click through the pages...')
-    let tsv = 'name\taddress\tURL\tPrice Range\n';
+    let tsv = 'name\taddress\tURL\tprice-range\n';
     let nextButton = document.querySelector('a.next ');
     for(;;) {
         tsv += Array.from(document.querySelectorAll('article.placard-option')).map(propertyInfo => {
