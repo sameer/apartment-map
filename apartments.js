@@ -1,7 +1,7 @@
 // apartments.com listings
 (async () => {
     console.log('Please wait while I click through the pages...')
-    let tsv = 'name\taddress\tURL\n';
+    let tsv = 'name\taddress\tURL\tPrice Range\n';
     let nextButton = document.querySelector('a.next ');
     for(;;) {
         tsv += Array.from(document.querySelectorAll('article.placard-option')).map(propertyInfo => {
@@ -10,7 +10,13 @@
             const addressElement = propertyInfo.querySelector('div.property-address');
             const address = addressElement.getAttribute('title');
             const url = propertyInfo.querySelector('a.property-link').href;
-            return title + '\t' + address + '\t' + url + '\n'
+            let priceRange = propertyInfo.querySelector('div.price-range');
+            if (priceRange == null) {
+                priceRange = 'N/A';
+            } else {
+                priceRange = priceRange.textContent;
+            }
+            return title + '\t' + address + '\t' + url + '\t' + priceRange + '\n'
         }).reduce((acc, curr) => acc + curr, '');
         if (nextButton != null) {
             const prevTitle = document.querySelector('span.title').textContent;
