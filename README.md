@@ -8,7 +8,7 @@ So you can consider multiple factors beyond your commute. Maybe you want to look
 
 ## Demo
 
-I pulled apartments in Culver city and displayed them alongside Metro stations:
+I pulled apartments in the Los Angeles area and displayed them alongside Metro stations:
 
 ![Screenshot of Google My Maps](screenshot.png)
 
