@@ -1,10 +1,10 @@
 # apartment-map
 
-Import apartments from apartments.com to Google My Maps.
+Import your [Apartments.com](apartments.com) search to Google My Maps.
 
 ## Why?
 
-[Apartments.com](apartments.com) provides basic search filters to help narrow down listings. However, there is no way to  consider factors beyond what is allowed. Maybe you want to look at bus routes, crime, or even noise levels.
+Apartments.com provides basic search filters to help narrow down listings. However, there is no way to consider custom factors outside what the site allows. Maybe you want to look at bus routes, crime, or even noise levels.
 
 ## Demo
 
