@@ -14,7 +14,7 @@ I pulled apartments in the Los Angeles area and displayed them alongside Metro s
 
 Each location has the price range and a link back to the original listing: ![Screenshot of Google My Maps showing listing details](https://user-images.githubusercontent.com/11097096/118912172-5ce5e280-b8f5-11eb-8c85-3b13b3416b71.png)
 
-If you want to make your map even more detailed, you can add car or public transit durations with `directions.py`: ![Screenshot of Google My Maps showing listing details with distance and bus fare](https://user-images.githubusercontent.com/11097096/118912388-bbab5c00-b8f5-11eb-8917-15928f0d1387.png)
+If you want to make your map even more detailed, you can add car or public transit durations to the TSV file with `directions.py`: ![Screenshot of Google My Maps showing listing details with distance and bus fare](https://user-images.githubusercontent.com/11097096/118912388-bbab5c00-b8f5-11eb-8917-15928f0d1387.png)
 
 
 ## Instructions
