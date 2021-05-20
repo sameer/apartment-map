@@ -37,7 +37,7 @@
             }
             nextButton = document.querySelector('a.next ');
         } else {
-            console.log('Done searching!');
+            console.log('Done!');
             break;
         }
     }
@@ -48,6 +48,7 @@
     link.href = tsvDataUri;
     link.download = 'apartments.tsv';
     link.click();
+    console.log('You should now see a pop-up to download a TSV file with the listings from your search');
 })().catch(e => {
     console.log('There was an error while pulling listings: ' + e.message + '\nThere may be an issue with your browser or Apartments.com has changed their website. Please create an issue on GitHub.');
     console.log(e.stack);
