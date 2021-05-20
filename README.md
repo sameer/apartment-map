@@ -12,6 +12,11 @@ I pulled apartments in Culver city along with the Metro stations:
 
 ![Screenshot of Google My Maps](screenshot.png)
 
+Each location has the price range and a link back to the original listing: ![Screenshot of Google My Maps showing listing details](https://user-images.githubusercontent.com/11097096/118912172-5ce5e280-b8f5-11eb-8c85-3b13b3416b71.png)
+
+If you want to make your map even more detailed, you can add car or public transit durations with `directions.py`: ![Screenshot of Google My Maps showing listing details with distance and bus fare](https://user-images.githubusercontent.com/11097096/118912388-bbab5c00-b8f5-11eb-8917-15928f0d1387.png)
+
+
 ## Instructions
 
 1. Do your search on apartments.com. Make sure you are on page 1 of the results.
