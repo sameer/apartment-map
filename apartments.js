@@ -10,7 +10,7 @@
         console.log(`Processing page ${pageNumber} out of ${pages.length}`);
         tsv += Array.from(document.querySelectorAll('article.placard-option')).map(propertyInfo => {
             const titleElement = propertyInfo.querySelector('span.title');
-            const title = titleElement.textContent;
+            const name = titleElement.textContent;
             const addressElement = propertyInfo.querySelector('div.property-address');
             const address = addressElement.getAttribute('title');
             const url = propertyInfo.querySelector('a.property-link').href;
@@ -21,7 +21,7 @@
             } else {
                 priceRange = priceRange.textContent;
             }
-            return title + '\t' + address + '\t' + url + '\t' + priceRange + '\n'
+            return `${name}\t${address}\t${url}\t${priceRange}\n`
         }).reduce((acc, curr) => acc + curr, '');
         // load next page or finish search
         if (pageNumber < pages.length) {
@@ -33,7 +33,7 @@
                 await new Promise(r => setTimeout(r, 1000));
             } while (prevTitle === document.querySelector('span.title'));
             if (pages[pageNumber - 1].className === 'active') {
-                console.log('The next button seems to be the same button after I clicked it.\nEither your browser does not allow programmatic clicks or Apartments.com changed their website.\nPlease create an issue on GitHub.');
+                console.log('The page did not change after I clicked the next one.\nEither your browser does not allow programmatic clicks or Apartments.com changed their website.\nPlease create an issue on GitHub.');
                 break;
             }
         } else {
