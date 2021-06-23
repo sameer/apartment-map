@@ -29,7 +29,7 @@
             pages[pageNumber].click();
             pageNumber++;
             do {
-                console.log('Waiting for page ' + pageNumber + ' to load');
+                console.log(`Waiting for page ${pageNumber} to load`);
                 await new Promise(r => setTimeout(r, 1000));
             } while (prevTitle === document.querySelector('span.title'));
             if (pages[pageNumber - 1].className === 'active') {
@@ -50,6 +50,6 @@
     link.click();
     console.log('You should now see a pop-up to download a TSV file with the listings from your search');
 })().catch(e => {
-    console.log('There was an error while pulling listings: ' + e.message + '\nThere may be an issue with your browser or Apartments.com has changed their website. Please create an issue on GitHub.');
+    console.log(`There was an error while pulling listings: ${e.message} \nThere may be an issue with your browser or Apartments.com has changed their website. Please create an issue on GitHub.`);
     console.log(e.stack);
 });
