@@ -19,7 +19,7 @@ If you want to add accurate commute estimates, use `directions.py` to modify you
 
 ## Instructions
 
-1. Do your search on apartments.com. Make sure you are on page 1 of the results.
+1. Do your search on [apartments.com](https://apartments.com)
 1. Right click on the page and hit "Inspect Element". In Chrome, this is just "Inspect".
     * Beware that this changes the size of the map and the results may change.
 1. Go to the tab that says "Console".
