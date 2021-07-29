@@ -25,9 +25,13 @@ If you want to add accurate commute estimates, use `directions.py` to modify you
 1. Go to the tab that says "Console".
 1. Copy and paste [apartments.js](https://raw.githubusercontent.com/sameer/apartment-map/main/apartments.js) into the console. When it's done, the page will offer to save an `apartments.tsv` file. Download that.
     * You may receive a warning about only pasting code you trust. Bypass that. If you have any concerns, feel free to read the code 🙂
-1. Upload it to Google My Maps.
-1. Pick address for the positioning column.
-1. Pick name for the marker name column.
+1. Upload it to [Google My Maps](https://www.google.com/maps/about/mymaps/)
+   1. If you don't have a map yet, create one 
+   1. Click `Add layer`
+   1. On the new layer, click `Import`
+   1. Select your `apartments.tsv` file
+   1. Pick address for the positioning column.
+   1. Pick name for the marker name column.
 
 ### Bonus
 
