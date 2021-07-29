@@ -28,3 +28,12 @@ If you want to add accurate commute estimates, use `directions.py` to modify you
 1. Upload it to Google My Maps.
 1. Pick address for the positioning column.
 1. Pick name for the marker name column.
+
+### Bonus
+
+If you want accurate distance estimates using Google Maps:
+
+1. Get credentials for the [Google Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/start)
+1. Open `directions.py` and customize relevant variables
+1. Run `directions.py` with `apartments.tsv` in the same folder
+1. Use `apartments-with-distance.tsv` in lieu of `apartments.tsv` when following steps to add to Google My Maps.
