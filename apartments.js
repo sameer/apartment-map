@@ -4,7 +4,7 @@
     let tsv = 'name\taddress\tURL\tprice-range\n';
 
     let pageNumber = 1;
-    for (;;) {
+    for (; ;) {
         // load next page or finish search
         const pages = new Map()
         Array.from(document.querySelectorAll('ol > li > a')).filter(elem => elem.hasAttribute('data-page')).forEach(elem => {
@@ -33,7 +33,13 @@
             const titleElement = propertyInfo.querySelector('span.title');
             const name = titleElement.textContent;
             const addressElement = propertyInfo.querySelector('div.property-address');
-            const address = addressElement.getAttribute('title');
+
+            let address = addressElement.getAttribute('title');
+            // Some listings have part of the address in the title
+            const regex = /^(?<city>[A-Z][a-z]+), (?<state>[A-Z]{2}) (?<zipcode>\d{5}(?:-\d{4})?)$/;
+            if (regex.test(address)) {
+                address = name + ' ' + address;
+            }
             const url = propertyInfo.querySelector('a.property-link').href;
             let priceRange = propertyInfo.querySelector('div.price-range');
             // some listings do not show prices
