@@ -3,6 +3,8 @@
     console.log('Please wait while I click through the pages...')
     let tsv = 'name\taddress\tURL\tprice-range\n';
 
+    let prevFirstListingTitle = undefined;
+
     let pageNumber = 1;
     for (; ;) {
         // load next page or finish search
@@ -10,8 +12,9 @@
         Array.from(document.querySelectorAll('ol > li > a')).filter(elem => elem.hasAttribute('data-page')).forEach(elem => {
             pages.set(Number(elem.getAttribute('data-page')), elem);
         });
+
         const nextButton = document.querySelector('a.next ');
-        if (pages.get(pageNumber)) {
+        if (pages.has(pageNumber)) {
             pages.get(pageNumber).click();
         } else if (nextButton) {
             nextButton.click()
@@ -20,10 +23,14 @@
             break;
         }
 
+        let firstListingTitle = undefined;
         do {
             console.log(`Waiting for page ${pageNumber} to load`);
             await new Promise(r => setTimeout(r, 1000));
-        } while (window.getComputedStyle(document.querySelector('div#placardLoadingOverlay')).display !== 'none');
+            firstListingTitle = document.querySelector('article.placard-option span.title')?.textContent;
+        } while (window.getComputedStyle(document.querySelector('div#placardLoadingOverlay')).display !== 'none'
+            || prevFirstListingTitle === firstListingTitle);
+        prevFirstListingTitle = firstListingTitle;
 
         console.log(`Processing ${pageNumber}`);
         pageNumber++;
@@ -41,13 +48,8 @@
                 address = name + ' ' + address;
             }
             const url = propertyInfo.querySelector('a.property-link').href;
-            let priceRange = propertyInfo.querySelector('div.price-range');
             // some listings do not show prices
-            if (priceRange == null) {
-                priceRange = 'N/A';
-            } else {
-                priceRange = priceRange.textContent;
-            }
+            let priceRange = propertyInfo.querySelector('div.price-range')?.textContent ?? 'N/A';
             return `${name}\t${address}\t${url}\t${priceRange}\n`
         }).reduce((acc, curr) => acc + curr, '');
     }
