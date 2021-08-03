@@ -8,12 +8,12 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-# Places you want to know how far the apartment is from (i.e. the office)
+# Places you want to know how far your apartment is from (i.e. the office)
 POINTS_OF_INTEREST = [
 
 ]
 # Maximum time you're willing to transit including walking
-MAX_DIRECTIONS_DURATION_MINS = 50
+MAX_DIRECTIONS_DURATION_MINS = 50.
 
 # Pacific Timezone
 TIMEZONE = timezone("US/Pacific")
@@ -67,7 +67,7 @@ for i, poi in enumerate(POINTS_OF_INTEREST):
                 distance.append("N/A")
             try:
                 duration.append(
-                    int(distance_matrix_row_element["duration"]["value"]) / 60
+                    float(distance_matrix_row_element["duration"]["value"]) / 60.
                 )
             except KeyError:
                 # It's not a proper address or it's impossible to get to by transit
@@ -77,9 +77,9 @@ for i, poi in enumerate(POINTS_OF_INTEREST):
                 fare.append(distance_matrix_row_element["fare"]["text"])
             except KeyError:
                 fare.append("N/A")
-            logging.info(
-                f"Processed {chunk[j][0]+1}/{len(apartment_addresses)}"
-            )
+        logging.info(
+            f"Processed {chunk[j][0]+1}/{len(apartment_addresses)}"
+        )
     apartments_df[f"distance_{i}"] = distance
     apartments_df[f"duration_{i}"] = duration
     apartments_df[f"fare_{i}"] = fare
