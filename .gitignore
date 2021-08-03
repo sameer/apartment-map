@@ -1,0 +1,5 @@
+.env
+.venv/
+.vscode/
+apartments.tsv
+apartments-with-distance.tsv
