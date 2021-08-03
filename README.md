@@ -1,10 +1,10 @@
 # apartment-map
 
-Import your [Apartments.com](apartments.com) search to Google My Maps.
+Import your [Apartments.com](apartments.com) or [Zillow](https://www.zillow.com/) search to Google My Maps.
 
 ## Why?
 
-Apartments.com provides basic search filters to help narrow down listings. However, there is no way to consider custom factors outside what the site allows. Maybe you want to look at bus routes, crime, or even noise levels.
+These sites provide basic search filters to help narrow down listings. However, there is no way to consider custom factors outside what the site allows. Maybe you want to look at bus routes, crime, or even noise levels.
 
 ## Demo
 
@@ -19,17 +19,17 @@ If you want to add accurate commute estimates, use `directions.py` to modify you
 
 ## Instructions
 
-1. Do your search on [apartments.com](https://apartments.com)
+1. Do your search on [Apartments.com](https://apartments.com) or [Zillow](https://www.zillow.com/)
 1. Right click on the page and hit "Inspect Element". In Chrome, this is just "Inspect".
     * Beware that this changes the size of the map and the results may change.
 1. Go to the tab that says "Console".
-1. Copy and paste [apartments.js](https://raw.githubusercontent.com/sameer/apartment-map/main/apartments.js) into the console. When it's done, the page will offer to save an `apartments.tsv` file. Download that.
+1. Copy and paste [apartments.js](https://raw.githubusercontent.com/sameer/apartment-map/main/apartments.js) or [zillow.js](https://raw.githubusercontent.com/sameer/apartment-map/main/zillow.js) into the console. When it's done, the page will offer to save a TSV file. Download that.
     * You may receive a warning about only pasting code you trust. Bypass that. If you have any concerns, feel free to read the code 🙂
 1. Upload it to [Google My Maps](https://www.google.com/maps/about/mymaps/)
    1. If you don't have a map yet, create one 
    1. Click `Add layer`
    1. On the new layer, click `Import`
-   1. Select your `apartments.tsv` file
+   1. Select your TSV file
    1. Pick address for the positioning column.
    1. Pick name for the marker name column.
 
