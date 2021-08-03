@@ -1,4 +1,4 @@
-// apartments.com listings
+// Apartments.com listings
 (async () => {
     console.log('Please wait while I click through the pages...')
     let tsv = 'name\taddress\tURL\tprice-range\n';
