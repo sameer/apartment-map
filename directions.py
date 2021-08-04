@@ -71,7 +71,7 @@ for i, poi in enumerate(POINTS_OF_INTEREST):
                 )
             except KeyError:
                 # It's not a proper address or it's impossible to get to by transit
-                logging.warn(f"Missing directions from {chunk[j]} to {poi}")
+                logging.warning(f"Missing directions from {chunk[j]} to {poi}")
                 duration.append(MAX_DIRECTIONS_DURATION_MINS + 1)
             try:
                 fare.append(distance_matrix_row_element["fare"]["text"])
