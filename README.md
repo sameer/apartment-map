@@ -4,7 +4,7 @@ Import your apartment search to Google My Maps.
 
 ## Why?
 
-Apartment listing sites provide basic search filters to help narrow down listings. However, there is no way to consider custom factors outside what the site allows. Maybe you want to look at bus routes, crime, or even noise levels.
+Apartment listing sites provide basic search filters to help narrow down listings. However, there is no way to consider custom factors outside what a site allows. Maybe you want to look at bus routes, crime, or even noise levels.
 
 ## Demo
 
