@@ -21,6 +21,7 @@ If you want to add accurate commute estimates, use `directions.py` to modify you
 - [x] [Apartments.com](https://www.apartments.com)
 - [x] [Zillow](https://www.zillow.com)
 - [x] [rent.com](https://www.rent.com) & [Apartmentguide](https://www.apartmentguide.com/)
+- [x] [ForRent.com](https://www.forrent.com/)
 
 ## Instructions
 

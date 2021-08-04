@@ -3,10 +3,11 @@
   const website = window.location.href;
   const isApartments = website.includes("apartments.com");
   const isZillow = website.includes("zillow.com");
+  const isForRent = website.includes("forrent.com");
   const isRent =
     website.includes("rent.com") || website.includes("apartmentguide.com");
 
-  if (!(isApartments || isZillow || isRent)) {
+  if (!(isApartments || isZillow || isForRent || isRent)) {
     console.error(
       `The website "${website}" is not supported. Please open an issue on GitHub.`
     );
@@ -24,6 +25,11 @@
         document.querySelector(
           `a[Title="Page ${pageNumber}, current page"]`
         ) !== null
+      );
+    } else if (isForRent) {
+      return (
+        document.querySelector('a[aria-current="true"]')?.textContent ===
+        `page ${pageNumber} `
       );
     } else if (isRent) {
       // Doesn't have page buttons
@@ -46,6 +52,19 @@
       } else {
         return button;
       }
+    } else if (isForRent) {
+      const button =
+        Array.from(document.querySelectorAll('a[aria-current="false"]')).find(
+          (pageButton) => pageButton?.textContent === `page ${pageNumber} `
+        ) ?? document.querySelector('a[aria-label="next page"]');
+      if (
+        button.hasAttribute("aria-disabled") &&
+        button.getAttribute("aria-disabled") === "true"
+      ) {
+        return null;
+      } else {
+        return button;
+      }
     } else if (isRent) {
       return document.querySelector('a[data-tid="pagination-next"]');
     }
@@ -60,6 +79,8 @@
       );
     } else if (isZillow) {
       return document.querySelector("div.list-loading-message-cover") !== null;
+    } else if (isForRent) {
+      return document.querySelector("div.loading-container") !== null;
     } else if (isRent) {
       return (
         document
@@ -75,6 +96,10 @@
         ?.textContent;
     } else if (isZillow) {
       return document.querySelector("article.list-card address")?.textContent;
+    } else if (isForRent) {
+      return document.querySelector(
+        "article.listing-card h2.property-title > a"
+      )?.textContent;
     } else if (isRent) {
       return document.querySelector(
         'div.listing-card a[data-tid="property-title"]'
@@ -152,6 +177,19 @@
           };
         }
       );
+    } else if (isForRent) {
+      const titleSelector = "h2.property-title > a";
+      return Array.from(document.querySelectorAll("article.listing-card")).map(
+        (listing) => ({
+          name: listing.querySelector(titleSelector)?.textContent,
+          address: listing.querySelector("address")?.textContent,
+          url: listing.querySelector(titleSelector)?.href,
+          priceRange:
+            listing
+              .querySelector("p.copy-row span.border-left")
+              ?.textContent?.replace("–", "-") ?? "N/A",
+        })
+      );
     } else if (isRent) {
       const titleSelector = 'a[data-tid="property-title"]';
       return Array.from(document.querySelectorAll("div.listing-card")).map(
@@ -209,7 +247,7 @@
     tsv += (await getListings())
       .map(
         ({ name, address, url, priceRange }) =>
-          `${name}\t${address}\t${url}\t${priceRange}\n`
+          `${name.trim()}\t${address.trim()}\t${url.trim()}\t${priceRange.trim()}\n`
       )
       .reduce((acc, curr) => acc + curr, "");
   }
