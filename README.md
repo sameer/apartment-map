@@ -21,6 +21,7 @@ If you want to add accurate commute estimates, use `directions.py` to modify you
 1. Do your search on [Apartments.com](https://apartments.com) or [Zillow](https://www.zillow.com/)
 1. Right click on the page and hit "Inspect Element". In Chrome, this is just "Inspect".
     * Beware that this changes the size of the map and the results may change.
+    * For best results, make sure you are on the first page of results.
 1. Go to the tab that says "Console".
 1. Copy and paste [apartments.js](https://raw.githubusercontent.com/sameer/apartment-map/main/apartments.js) into the console. When it's done, the page will offer to save a TSV file. Download that.
     * You may receive a warning about only pasting code you trust. Bypass that. If you have any concerns, feel free to read the code 🙂
