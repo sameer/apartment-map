@@ -3,7 +3,8 @@
   const website = window.location.href;
   const isApartments = website.includes("apartments.com");
   const isZillow = website.includes("zillow.com");
-  const isRent = website.includes("rent.com");
+  const isRent =
+    website.includes("rent.com") || website.includes("apartmentguide.com");
 
   if (!(isApartments || isZillow || isRent)) {
     console.error(
@@ -25,6 +26,7 @@
         ) !== null
       );
     } else if (isRent) {
+      // Doesn't have page buttons
       return pageNumber === 1;
     }
   }
@@ -45,7 +47,7 @@
         return button;
       }
     } else if (isRent) {
-      return document.querySelector('a[data-tag_item="next"]');
+      return document.querySelector('a[data-tid="pagination-next"]');
     }
   }
 
@@ -162,9 +164,10 @@
               (listing.querySelector('a[data-id="listing-info-address"]') ??
                 ""),
           url: listing.querySelector(titleSelector)?.href,
-          priceRange: listing
-            .querySelector('span[data-tid="price"]')
-            ?.textContent?.replace("–", "-"),
+          priceRange:
+            listing
+              .querySelector('span[data-tid="price"]')
+              ?.textContent?.replace("–", "-") ?? "N/A",
         })
       );
     }
