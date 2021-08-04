@@ -16,7 +16,7 @@
       return (
         document
           .querySelector(`a[data-page="${pageNumber}]`)
-          ?.classList.includes("active") ?? false
+          ?.classList?.includes("active") ?? false
       );
     } else if (isZillow) {
       return (
@@ -24,6 +24,8 @@
           `a[Title="Page ${pageNumber}, current page"]`
         ) !== null
       );
+    } else if (isRent) {
+      return pageNumber === 1;
     }
   }
 
@@ -42,8 +44,9 @@
       } else {
         return button;
       }
+    } else if (isRent) {
+      return document.querySelector('a[data-tag_item="next"]');
     }
-    return null;
   }
 
   function isLoading() {
@@ -55,6 +58,12 @@
       );
     } else if (isZillow) {
       return document.querySelector("div.list-loading-message-cover") !== null;
+    } else if (isRent) {
+      return (
+        document
+          .querySelector('div[data-tid="property-count"]')
+          ?.textContent?.includes("Loading Properties") ?? false
+      );
     }
   }
 
@@ -64,6 +73,10 @@
         ?.textContent;
     } else if (isZillow) {
       return document.querySelector("article.list-card address")?.textContent;
+    } else if (isRent) {
+      return document.querySelector(
+        'div.listing-card a[data-tid="property-title"]'
+      )?.textContent;
     }
   }
 
@@ -137,6 +150,23 @@
           };
         }
       );
+    } else if (isRent) {
+      const titleSelector = 'a[data-tid="property-title"]';
+      return Array.from(document.querySelectorAll("div.listing-card")).map(
+        (listing) => ({
+          name: listing.querySelector(titleSelector)?.textContent,
+          address:
+            listing.querySelector('a[data-tid="listing-info-address"]')
+              ?.textContent ??
+            (listing.querySelector(titleSelector)?.textContent ?? "") +
+              (listing.querySelector('a[data-id="listing-info-address"]') ??
+                ""),
+          url: listing.querySelector(titleSelector)?.href,
+          priceRange: listing
+            .querySelector('span[data-tid="price"]')
+            ?.textContent?.replace("–", "-"),
+        })
+      );
     }
   }
 
@@ -161,7 +191,9 @@
 
     let pageHash = undefined;
     do {
-      console.log(`Waiting for page ${pageNumber} to load`);
+      console.log(
+        `Waiting for page ${pageNumber} to load (debug info: ${isLoading()} | ${prevPageHash} === ${pageHash})`
+      );
       await new Promise((r) => setTimeout(r, 1000));
       pageHash = getPageHash();
     } while (isLoading() || prevPageHash === pageHash);
