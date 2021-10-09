@@ -136,8 +136,11 @@
         const url = propertyInfo.querySelector("a.property-link").href;
         // some listings do not show prices
         let priceRange =
-          propertyInfo.querySelector("p.property-pricing")?.textContent ??
-          "N/A";
+          (
+            propertyInfo.querySelector(".property-pricing") ??
+            propertyInfo.querySelector(".property-rents") ??
+            propertyInfo.querySelector(".price-range")
+          )?.textContent ?? "N/A";
 
         return {
           name,
