@@ -9,10 +9,13 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 # Places you want to know how far your apartment is from (i.e. the office)
-POINTS_OF_INTEREST = ["Fremont Troll"]
+POINTS_OF_INTEREST = [
+    "Fremont Troll",
+    "Gas Works Park"
+]
 
 # Maximum time you're willing to travel to each POI
-MAX_DIRECTIONS_DURATION_MINS = [30]
+MAX_DIRECTIONS_DURATION_MINS = [30, 15]
 
 # If the time bound should be required on all locations (True), or at least one (False)
 MAX_DIRECTIONS_DURATION_AND = True
@@ -39,7 +42,11 @@ TRANSIT_OPTS = [
         "traffic_model": "optimistic",
         "transit_routing_preference": "fewer_transfers",
         "arrival_time": ARRIVAL_TIMESTAMP,
-    }
+    },
+    {
+        "mode": "walking",
+        "arrival_time": ARRIVAL_TIMESTAMP,
+    },
 ]
 
 gmaps = googlemaps.Client(key=os.environ["API_KEY"])
@@ -76,7 +83,7 @@ for i, poi in enumerate(POINTS_OF_INTEREST):
             except KeyError:
                 # It's not a proper address or it's impossible to get to (i.e. for public transit, no bus)
                 logging.warning(f"Missing directions from {chunk[j]} to {poi}")
-                duration.append(MAX_DIRECTIONS_DURATION_MINS + 1)
+                duration.append(MAX_DIRECTIONS_DURATION_MINS[i] + 1)
             try:
                 fare.append(distance_matrix_row_element["fare"]["text"])
             except KeyError:
