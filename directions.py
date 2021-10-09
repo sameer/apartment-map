@@ -111,7 +111,7 @@ apartments_df = apartments_df.query(
 
 apartments_df["min_duration"] = apartments_df[
     [f"duration_{i}" for i in range(len(POINTS_OF_INTEREST))]
-].max(axis=1)
+].min(axis=1)
 apartments_df["mean_duration"] = apartments_df[
     [f"duration_{i}" for i in range(len(POINTS_OF_INTEREST))]
 ].mean(axis=1)
