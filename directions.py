@@ -9,11 +9,13 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 # Places you want to know how far your apartment is from (i.e. the office)
-POINTS_OF_INTEREST = [
+POINTS_OF_INTEREST = ["Fremont Troll"]
 
-]
-# Maximum time you're willing to transit including walking
-MAX_DIRECTIONS_DURATION_MINS = 50.
+# Maximum time you're willing to travel to each POI
+MAX_DIRECTIONS_DURATION_MINS = [30]
+
+# If the time bound should be required on all locations (True), or at least one (False)
+MAX_DIRECTIONS_DURATION_AND = True
 
 # Pacific Timezone
 TIMEZONE = timezone("US/Pacific")
@@ -31,12 +33,14 @@ ARRIVAL_DATE_TIME = TIMEZONE.localize(
 ARRIVAL_TIMESTAMP = str(int(ARRIVAL_DATE_TIME.timestamp()))
 
 # See options at https://googlemaps.github.io/google-maps-services-python/docs/index.html#googlemaps.Client.distance_matrix
-TRANSIT_OPTS = {
-    "mode": "transit",
-    "traffic_model": "best_guess",
-    "transit_routing_preference": "fewer_transfers",
-    "arrival_time": ARRIVAL_TIMESTAMP,
-}
+TRANSIT_OPTS = [
+    {
+        "mode": "transit",
+        "traffic_model": "optimistic",
+        "transit_routing_preference": "fewer_transfers",
+        "arrival_time": ARRIVAL_TIMESTAMP,
+    }
+]
 
 gmaps = googlemaps.Client(key=os.environ["API_KEY"])
 
@@ -54,7 +58,7 @@ for i, poi in enumerate(POINTS_OF_INTEREST):
     fare = []
     for chunk in chunked(list(enumerate(apartment_addresses)), 25):
         distance_matrix_response = gmaps.distance_matrix(
-            [address for _, address in chunk], poi, **TRANSIT_OPTS
+            [address for _, address in chunk], poi, **TRANSIT_OPTS[i]
         )
 
         for j in range(len(chunk)):
@@ -67,19 +71,17 @@ for i, poi in enumerate(POINTS_OF_INTEREST):
                 distance.append("N/A")
             try:
                 duration.append(
-                    float(distance_matrix_row_element["duration"]["value"]) / 60.
+                    float(distance_matrix_row_element["duration"]["value"]) / 60.0
                 )
             except KeyError:
-                # It's not a proper address or it's impossible to get to by transit
+                # It's not a proper address or it's impossible to get to (i.e. for public transit, no bus)
                 logging.warning(f"Missing directions from {chunk[j]} to {poi}")
                 duration.append(MAX_DIRECTIONS_DURATION_MINS + 1)
             try:
                 fare.append(distance_matrix_row_element["fare"]["text"])
             except KeyError:
                 fare.append("N/A")
-        logging.info(
-            f"Processed {chunk[j][0]+1}/{len(apartment_addresses)}"
-        )
+        logging.info(f"Processed {chunk[j][0]+1}/{len(apartment_addresses)}")
     apartments_df[f"distance_{i}"] = distance
     apartments_df[f"duration_{i}"] = duration
     apartments_df[f"fare_{i}"] = fare
@@ -90,9 +92,15 @@ apartments_df["max_duration"] = apartments_df[
 ].max(axis=1)
 
 
-apartments_df = apartments_df[
-    apartments_df["max_duration"] < MAX_DIRECTIONS_DURATION_MINS
-]
+query_operator = " & " if MAX_DIRECTIONS_DURATION_AND else " | "
+apartments_df = apartments_df.query(
+    query_operator.join(
+        [
+            f"duration_{i} <= {max_duration_to_poi}"
+            for i, max_duration_to_poi in enumerate(MAX_DIRECTIONS_DURATION_MINS)
+        ]
+    )
+)
 
 apartments_df["min_duration"] = apartments_df[
     [f"duration_{i}" for i in range(len(POINTS_OF_INTEREST))]
