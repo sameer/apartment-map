@@ -17,8 +17,8 @@
     if (isApartments) {
       return (
         document
-          .querySelector(`a[data-page="${pageNumber}]`)
-          ?.classList?.includes("active") ?? false
+          .querySelector(`a[data-page="${pageNumber}"]`)
+          ?.classList?.contains("active") ?? false
       );
     } else if (isZillow) {
       return (
@@ -92,8 +92,9 @@
 
   function getPageHash() {
     if (isApartments) {
-      return document.querySelector("article.placard-option span.title")
-        ?.textContent;
+      return document.querySelector(
+        "li.mortar-wrapper article.placard span.title"
+      )?.textContent;
     } else if (isZillow) {
       return document.querySelector("article.list-card address")?.textContent;
     } else if (isForRent) {
@@ -110,15 +111,22 @@
   async function getListings() {
     if (isApartments) {
       return Array.from(
-        document.querySelectorAll("article.placard-option")
+        document.querySelectorAll("li.mortar-wrapper article.placard")
       ).map((propertyInfo) => {
-        const titleElement = propertyInfo.querySelector("span.title");
+        const titleElement =
+          propertyInfo.querySelector("span.title") ??
+          propertyInfo.querySelector("div.property-title");
+        if (titleElement == null) {
+          console.log(propertyInfo);
+        }
         const name = titleElement.textContent;
-        const addressElement = propertyInfo.querySelector(
-          "div.property-address"
+        const addressElements = Array.from(
+          propertyInfo.querySelectorAll(".property-address")
         );
 
-        let address = addressElement.getAttribute("title");
+        let address = addressElements
+          .map((x) => x.getAttribute("title"))
+          .join(" ");
         // Some listings have part of the address in the title
         const regex =
           /^(?<city>[A-Z][a-z]+), (?<state>[A-Z]{2}) (?<zipcode>\d{5}(?:-\d{4})?)$/;
@@ -128,7 +136,8 @@
         const url = propertyInfo.querySelector("a.property-link").href;
         // some listings do not show prices
         let priceRange =
-          propertyInfo.querySelector("div.price-range")?.textContent ?? "N/A";
+          propertyInfo.querySelector("p.property-pricing")?.textContent ??
+          "N/A";
 
         return {
           name,
