@@ -15,11 +15,13 @@
 
   function onPage(pageNumber) {
     if (isApartments) {
-      return (
-        document
-          .querySelector(`a[data-page="${pageNumber}"]`)
-          ?.classList?.contains("active") ?? false
-      );
+      const pageLink = document.querySelector(`a[data-page="${pageNumber}"]`);
+      if (pageLink) {
+        return pageLink.classList?.contains("active") ?? false;
+      } else {
+        // No pagination
+        return pageNumber === 1;
+      }
     } else if (isZillow) {
       return (
         document.querySelector(
