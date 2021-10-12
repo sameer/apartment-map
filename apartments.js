@@ -49,7 +49,7 @@
       const button =
         document.querySelector(`a[Title="Page ${pageNumber}"]`) ??
         document.querySelector('a[Title="Next page"]');
-      if (button.hasAttribute("disabled")) {
+      if (button?.hasAttribute("disabled")) {
         return null;
       } else {
         return button;
