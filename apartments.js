@@ -265,9 +265,7 @@
       )
       .reduce((acc, curr) => acc + curr, "");
   }
-  // btoa does not support non-ascii characters: https://stackoverflow.com/q/23223718
-  tsv = tsv.replace(/[^\x00-\x7F]/g, "");
-  const tsvDataUri = "data:text/tsv;base64," + btoa(tsv);
+  const tsvDataUri = "data:text/tsv;base64," + btoa(unescape(encodeURIComponent(tsv)));
   const link = document.createElement("a");
   link.href = tsvDataUri;
   link.download = "apartments.tsv";
