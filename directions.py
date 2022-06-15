@@ -77,9 +77,14 @@ for i, poi in enumerate(POINTS_OF_INTEREST):
             except KeyError:
                 distance.append("N/A")
             try:
-                duration.append(
-                    float(distance_matrix_row_element["duration"]["value"]) / 60.0
-                )
+                if "duration_in_traffic" in distance_matrix_row_element:
+                    duration.append(
+                        float(distance_matrix_row_element["duration_in_traffic"]["value"]) / 60.0
+                    )
+                else:
+                    duration.append(
+                        float(distance_matrix_row_element["duration"]["value"]) / 60.0
+                    )
             except KeyError:
                 # It's not a proper address or it's impossible to get to (i.e. for public transit, no bus)
                 logging.warning(f"Missing directions from {chunk[j]} to {poi}")
